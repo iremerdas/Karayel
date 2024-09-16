@@ -1,0 +1,25 @@
+def get_ardu_connection():
+    # Arduino ile bağlantıyı başlat
+    arduino = serial.Serial('/dev/ttyUSB0', 9600)
+    time.sleep(2)  # Arduino'nun hazır olması için bekleyin
+    return arduino
+
+arduino = get_ardu_connection()
+
+def hareket_saga_don():
+    arduino.write(b'saga_don\n')
+
+
+def hareket_sola_don():
+    arduino.write(b'sola_don\n')
+
+
+def hareket_dur():
+    arduino.write(b'dur\n')
+
+
+def hareket_ileri():
+    arduino.write(b'ileri\n')
+
+def hareket_geri():
+    arduino.write(b'geri\n')
