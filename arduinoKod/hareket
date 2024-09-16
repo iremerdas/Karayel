@@ -1,0 +1,72 @@
+#include <Servo.h>
+
+// İki motor için ESC nesneleri oluşturuluyor
+Servo escsol;  // Sol motor için ESC
+Servo escsag;  // Sağ motor için ESC
+
+// PWM pin numaraları
+int escsolPin = 9;  // ESC 3 
+int escsagPin = 10;
+
+void setup() {
+  // ESC pinlerine atanıyor
+  escsol.attach(escsolPin);
+  escsag.attach(escsagPin);
+
+  // Motorları durdurmak için başlangıçta ESC'lere minimum değer gönderiliyor
+  escsol.writeMicroseconds(1500);  // 1000 mikro saniye, minimum hız
+  escsag.writeMicroseconds(1500);
+  
+  delay(1000);  // ESC'lerin başlangıç ayarlarını yapması için kısa bir bekleme
+}
+
+void loop() {
+  // Motorları ileri hareket ettirme komutu (2000 mikro saniye, maksimum hız)
+  ileri();
+  delay(5000);  // Motorları 5 saniye ileri çalıştır
+
+  // Motorları geri hareket ettirme komutu (1200 mikro saniye)
+  geri();
+  delay(5000);  // Motorları 5 saniye geri çalıştır
+
+  // Motorları durdurma
+  dur();
+  delay(5000);  // Motorları 5 saniye durdur
+
+  sagaDon();
+  delay(5000);  // Motorları 5 saniye durdur
+
+  sagaDon();
+  delay(5000);
+}
+
+// Motorları ileri çalıştırır
+void ileri(){
+  escsol.writeMicroseconds(2000);  // Sol motoru maksimum hızda çalıştır
+  escsag.writeMicroseconds(2000);  // Sağ motoru maksimum hızda çalıştır
+}
+
+// Motorları geri çalıştırır
+void geri(){
+  escsol.writeMicroseconds(1000);  // Sol motoru geri çalıştır
+  escsag.writeMicroseconds(1000);  // Sağ motoru geri çalıştır
+}
+
+// Motorları durdurur
+void dur() {
+  escsol.writeMicroseconds(1500);  // Her iki motoru durdur
+  escsag.writeMicroseconds(1500);
+}
+
+
+// Sağ motoru çalıştırır ve sağa döner
+void sagaDon() {
+  escsag.writeMicroseconds(1500);  // Sağ motoru yavaşlat veya durdur
+  escsol.writeMicroseconds(2000);  // Sol motoru hızlandır
+}
+
+// Sol motoru çalıştırır ve sola döner
+void solaDon() {
+  escsag.writeMicroseconds(2000);  // Sağ motoru hızlandır
+  escsol.writeMicroseconds(1500);  // Sol motoru yavaşlat veya durdur
+}
